@@ -9,6 +9,8 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Slider;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
@@ -37,6 +39,19 @@ public class ProcessController{
     @FXML
     private MediaView mediaView;
     private MediaPlayer mediaPlayer;
+    
+    @FXML
+    private Slider slider;
+    
+    @FXML
+    void sliderClicked(MouseEvent event) {
+    	
+    }
+    
+    @FXML
+    void sliderDragged(MouseEvent event) {
+    	
+    }
     
     @FXML
     void btnNextPressed(ActionEvent event) {
@@ -91,10 +106,16 @@ public class ProcessController{
     }
     
     public void initialize() {
+    	
+    	this.slider = new Slider(0, 500, 0);
+    	
     	this.keyPoint = new Double[]{0d, 60d, 120d, 380d};
     	
-    	Media media = new Media(getClass().getResource("/videos/Meiosis.mp4").toString());
+    	Media media = new Media(getClass().getResource("/hust/soict/cell_division/videos/Meiosis.mp4").toString());
     	mediaPlayer = new MediaPlayer(media);
+    	mediaPlayer.setAutoPlay(true);
+    	btnPlay.setText("Pause");
+    	isPlaying = true;
     	mediaView.setMediaPlayer(mediaPlayer);
     	
     }
