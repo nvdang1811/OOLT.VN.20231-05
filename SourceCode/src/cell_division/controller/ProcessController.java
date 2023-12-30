@@ -1,12 +1,8 @@
 package cell_division.controller;
 
-import java.io.File;
-import java.util.ResourceBundle;
 
-import javax.print.DocFlavor.URL;
-
-import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
@@ -14,8 +10,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
-import javafx.stage.Stage;
 import javafx.util.Duration;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 
 public class ProcessController{
 	private boolean isPlaying = false;
@@ -42,15 +39,14 @@ public class ProcessController{
     
     @FXML
     private Slider slider;
+   
+    private String directory; 
     
-    @FXML
-    void sliderClicked(MouseEvent event) {
+    public ProcessController() {
     	
     }
-    
-    @FXML
-    void sliderDragged(MouseEvent event) {
-    	
+    public ProcessController(String directory) {
+    	this.directory = directory;
     }
     
     @FXML
@@ -105,10 +101,29 @@ public class ProcessController{
 
     }
     
+    
+    void updateSlider() {
+    	System.out.println(mediaPlayer.getTotalDuration().toSeconds());
+    	slider.setMax(400);
+    	slider.setMin(0);
+    	slider.valueProperty().addListener(new ChangeListener<Number>() {
+    		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+    			if(slider.isValueChanging()) {
+    				System.out.println("Updating recorded");
+    				//Duration seekTo = new Duration(slider.getValue() * 1000);
+    				mediaPlayer.seek(Duration.seconds(slider.getValue()));
+    			}
+    		}
+    	}); 
+    	
+    	mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+    		public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+    			slider.setValue(newValue.toSeconds());
+    		}
+    	});	
+    }
+    
     public void initialize() {
-    	
-    	this.slider = new Slider(0, 500, 0);
-    	
     	this.keyPoint = new Double[]{0d, 60d, 120d, 380d};
     	
     	Media media = new Media(getClass().getResource("/cell_division/videos/Meiosis.mp4").toString());
@@ -118,6 +133,32 @@ public class ProcessController{
     	isPlaying = true;
     	mediaView.setMediaPlayer(mediaPlayer);
     	
+    	slider.setMax(1000);
+    	slider.setMin(0);
+    	
+    	mediaPlayer.setOnReady(new Runnable(){
+    		public void run() {		
+    			slider.setMax(mediaPlayer.getTotalDuration().toSeconds());
+    		}
+    	});
+    	
+    	slider.setOnMouseDragged(new EventHandler<MouseEvent>() {
+    		public void handle(MouseEvent arg0) {
+    			mediaPlayer.seek(Duration.seconds(slider.getValue()));
+    		}
+    	});
+    	
+    	slider.setOnMousePressed(new EventHandler<MouseEvent>() {
+    		public void handle(MouseEvent arg0) {
+    			mediaPlayer.seek(Duration.seconds(slider.getValue()));
+    		}
+    	});
+    	
+    	mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
+    		public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
+    			slider.setValue(newValue.toSeconds());
+    		}
+    	});	
     }
 }
 
