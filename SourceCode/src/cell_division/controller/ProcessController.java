@@ -101,28 +101,6 @@ public class ProcessController{
 
     }
     
-    
-    void updateSlider() {
-    	System.out.println(mediaPlayer.getTotalDuration().toSeconds());
-    	slider.setMax(400);
-    	slider.setMin(0);
-    	slider.valueProperty().addListener(new ChangeListener<Number>() {
-    		public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-    			if(slider.isValueChanging()) {
-    				System.out.println("Updating recorded");
-    				//Duration seekTo = new Duration(slider.getValue() * 1000);
-    				mediaPlayer.seek(Duration.seconds(slider.getValue()));
-    			}
-    		}
-    	}); 
-    	
-    	mediaPlayer.currentTimeProperty().addListener(new ChangeListener<Duration>() {
-    		public void changed(ObservableValue<? extends Duration> observable, Duration oldValue, Duration newValue) {
-    			slider.setValue(newValue.toSeconds());
-    		}
-    	});	
-    }
-    
     public void initialize() {
     	this.keyPoint = new Double[]{0d, 60d, 120d, 380d};
     	
@@ -141,7 +119,7 @@ public class ProcessController{
     			slider.setMax(mediaPlayer.getTotalDuration().toSeconds());
     		}
     	});
-    	
+
     	slider.setOnMouseDragged(new EventHandler<MouseEvent>() {
     		public void handle(MouseEvent arg0) {
     			mediaPlayer.seek(Duration.seconds(slider.getValue()));
