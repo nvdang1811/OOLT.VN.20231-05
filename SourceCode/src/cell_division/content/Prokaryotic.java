@@ -24,4 +24,15 @@ public class Prokaryotic extends Cells {
 	public void setComponents(ArrayList<Components> components) {
 		this.components = components;
 	}
+	
+	public void Meiosis() {
+	}
+	
+	public void Amitosis() {
+		
+	}
+	
+	public void Mitosis() {
+		
+	}
 }
