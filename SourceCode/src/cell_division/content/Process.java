@@ -4,6 +4,4 @@ public interface Process {
 	public void Amitosis();
 	public void Meiosis();
 	public void Mitosis();
-	
-	
 }
