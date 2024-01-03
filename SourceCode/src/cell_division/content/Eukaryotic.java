@@ -5,18 +5,26 @@ import java.util.ArrayList;
 public class Eukaryotic extends Cells{
 	private String name;
 	private ArrayList<Components> components;
-	private final String pathMeiosis = "./../videos/Meiosis.mp4";
-
+	private String path;
+	private Double[] keyFrames;
+	public Eukaryotic(String name) {
+		this.name = name;
+	}
 	@Override
 	public void Amitosis() {
+		
 	}
 
 	@Override
 	public void Meiosis() {
+		this.path = "./../videos/Meiosis.mp4";
+		this.keyFrames = new Double[] {0d, 111d, 120d, 131d, 180d, 202d, 211d, 214d};
 	}
 
 	@Override
 	public void Mitosis() {
+		this.path = "/cell_division/videos/Mitosis.mp4";
+		this.keyFrames = new Double[] {0d, 47d, 72d, 81d, 93d};
 	}
 	
 	public ArrayList<Components> getComponents(){
@@ -35,7 +43,11 @@ public class Eukaryotic extends Cells{
 		this.components = components;
 	}
 
-	public String getDirectoryMeiosis() {
-		return this.pathMeiosis;
+	public String getDirectory() {
+		return this.path;
+	}
+	
+	public Double[] getKeyFrames() {
+		return this.keyFrames;
 	}
 }
