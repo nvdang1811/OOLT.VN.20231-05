@@ -18,7 +18,7 @@ public class StartApp extends Application{
 		fxmlLoader.setController(mainController);
 		Parent root = fxmlLoader.load();
 		
-		primaryStage.setTitle("Process");
+		primaryStage.setTitle("Cell Division Demonstration");
 		primaryStage.setScene(new Scene(root));
 		primaryStage.show();
 	}

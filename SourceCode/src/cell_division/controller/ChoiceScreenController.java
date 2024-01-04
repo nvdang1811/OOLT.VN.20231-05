@@ -57,7 +57,7 @@ public class ChoiceScreenController{
     		Parent root = fxmlLoader.load();
     		Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
     		stage.setScene(new Scene(root));
-    		stage.setTitle("Store");
+    		stage.setTitle("Cell Division Demonstration");
     		stage.show();
     	} catch(IOException e) {
     		e.printStackTrace();
@@ -66,12 +66,19 @@ public class ChoiceScreenController{
 
     @FXML
     void btnViewComponentsPressed(ActionEvent event) {
-    	if(chosenCell instanceof Prokaryotic) {
-    		
-    	}
-    	if(chosenCell instanceof Eukaryotic) {
-    		
-    	}
+    		try {
+        		final String COMP_FXML_FILE_PATH = "/cell_division/screen/ComponentScreen.fxml";
+        		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(COMP_FXML_FILE_PATH));
+        		fxmlLoader.setController(new ComponentScreenController(chosenCell));
+        		Parent root = fxmlLoader.load();
+        		Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+        		stage.setScene(new Scene(root));
+        		stage.setTitle("Cell components");
+        		stage.show();
+        	} catch(IOException e) {
+        		e.printStackTrace();
+        	}
+    	//}
     }
 
     @FXML
@@ -84,13 +91,12 @@ public class ChoiceScreenController{
         	//Amitosis
         	if(chosenCell instanceof Prokaryotic) {
         		chosenCell.Amitosis();
-        		processController = new ProcessController(chosenCell, chosenCell.getDirectory(), chosenCell.getKeyFrames());
         	}
         	//Mitosis
         	if(chosenCell instanceof Eukaryotic) {
         		chosenCell.Mitosis();
-        		processController = new ProcessController(chosenCell, chosenCell.getDirectory(), chosenCell.getKeyFrames()); 
         	}
+        	processController = new ProcessController(chosenCell, chosenCell.getDirectory(), chosenCell.getKeyFrames());
         	fxmlLoader.setController(processController);
         	Parent root = fxmlLoader.load();
         	
@@ -126,11 +132,7 @@ public class ChoiceScreenController{
     	
     }
 
-    public ChoiceScreenController(Prokaryotic a) {
+    public ChoiceScreenController(Cells a) {
     	this.chosenCell = a;	
-    }
-
-    public ChoiceScreenController(Eukaryotic a) {
-    	this.chosenCell = a;
     }
 }
