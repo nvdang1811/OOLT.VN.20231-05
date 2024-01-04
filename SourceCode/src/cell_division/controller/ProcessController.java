@@ -4,20 +4,29 @@ package cell_division.controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Slider;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
+import javafx.stage.Stage;
 import javafx.util.Duration;
+
+import java.io.IOException;
+
+import cell_division.content.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 
 public class ProcessController{
 	private boolean isPlaying = false;
 	private Double[] keyPoint;
-	//private Cell cell;
+	private Cells cell;
     @FXML
     private Button btnNext;
 
@@ -45,8 +54,10 @@ public class ProcessController{
     public ProcessController() {
     	
     }
-    public ProcessController(String directory) {
+    public ProcessController(Cells cell, String directory, Double[] keyFrames) {
+    	this.cell = cell;
     	this.directory = directory;
+    	this.keyPoint = keyFrames;
     }
     
     @FXML
@@ -98,13 +109,28 @@ public class ProcessController{
 
     @FXML
     void btnReturnPressed(ActionEvent event) {
-
+    	try {
+    		mediaPlayer.pause();
+			final String CHOICE_FXML_FILE_PATH = "/cell_division/screen/ChoiceScreen.fxml";
+			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CHOICE_FXML_FILE_PATH));
+			if(this.cell instanceof Prokaryotic) {
+				fxmlLoader.setController(new ChoiceScreenController((Prokaryotic)this.cell));	
+			}
+			if(this.cell instanceof Eukaryotic) {
+				fxmlLoader.setController(new ChoiceScreenController((Eukaryotic)this.cell));
+			}
+			Parent root = fxmlLoader.load();
+			Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
+			stage.setScene(new Scene(root));
+			stage.setTitle("Cart");
+			stage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
     }
     
     public void initialize() {
-    	this.keyPoint = new Double[]{0d, 60d, 120d, 380d};
-    	
-    	Media media = new Media(getClass().getResource("/cell_division/videos/Meiosis.mp4").toString());
+    	Media media = new Media(getClass().getResource(directory).toString());
     	mediaPlayer = new MediaPlayer(media);
     	mediaPlayer.setAutoPlay(true);
     	btnPlay.setText("Pause");
