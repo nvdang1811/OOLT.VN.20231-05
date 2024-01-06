@@ -1,6 +1,7 @@
 package cell_division.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 import javafx.event.ActionEvent;
@@ -28,7 +29,11 @@ public class MainScreenController{
     	try {
     		final String HELP_FXML_FILE_PATH = "/cell_division/screen/HelpScreen.fxml";
     		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(HELP_FXML_FILE_PATH));
-    		fxmlLoader.setController(new HelpScreenController());
+    		ArrayList<String> listofImages = new ArrayList<String>();
+    		for(int i = 1; i <=6; i++) {
+    			listofImages.add("/cell_division/images/tutorial" + i + ".png");
+    		}
+    		fxmlLoader.setController(new HelpScreenController(listofImages));
     		Parent root = fxmlLoader.load();
     		Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
     		stage.setScene(new Scene(root));
