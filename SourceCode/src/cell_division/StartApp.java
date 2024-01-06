@@ -11,7 +11,6 @@ import javafx.stage.Stage;
 public class StartApp extends Application{
 	
 	public void start(Stage primaryStage) throws Exception {
-		final String PROCESS_FXML_FILE_PATH = "/cell_division/screen/ProcessScreen.fxml";
 		final String MAIN_FXML_FILE_PATH = "/cell_division/screen/MainScreen.fxml";
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(MAIN_FXML_FILE_PATH));
 		MainScreenController mainController = new MainScreenController();
