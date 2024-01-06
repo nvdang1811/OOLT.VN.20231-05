@@ -26,3 +26,5 @@ OOLT.VN.20231.05
 - Collecting reference material and image for prokaryotic cells
 - Design help screen, taking tutorial screenshots/edit and build its controller
 - Review class diagrams
+
+*Demo video link: https://youtu.be/H5pNMPDcC7s?si=G8TPYFKwSplYZvxx
