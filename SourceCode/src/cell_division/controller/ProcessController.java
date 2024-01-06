@@ -113,12 +113,7 @@ public class ProcessController{
     		mediaPlayer.pause();
 			final String CHOICE_FXML_FILE_PATH = "/cell_division/screen/ChoiceScreen.fxml";
 			FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(CHOICE_FXML_FILE_PATH));
-			if(this.cell instanceof Prokaryotic) {
-				fxmlLoader.setController(new ChoiceScreenController((Prokaryotic)this.cell));	
-			}
-			if(this.cell instanceof Eukaryotic) {
-				fxmlLoader.setController(new ChoiceScreenController((Eukaryotic)this.cell));
-			}
+			fxmlLoader.setController(new ChoiceScreenController(this.cell));
 			Parent root = fxmlLoader.load();
 			Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
 			stage.setScene(new Scene(root));
