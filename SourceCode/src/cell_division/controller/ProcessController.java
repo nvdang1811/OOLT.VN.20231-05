@@ -83,7 +83,6 @@ public class ProcessController{
     }
     
     Double findCheckpoint(Double playing, Double[] ascendList, boolean findBefore) {
-    	System.out.println(playing);
     	for(int i = 0; i < ascendList.length; i++) {
     		if(playing < ascendList[i]) {
     			if(findBefore && i < 2) return 0d;
