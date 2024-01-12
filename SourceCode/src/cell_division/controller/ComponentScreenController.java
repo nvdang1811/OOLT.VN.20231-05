@@ -75,6 +75,7 @@ public class ComponentScreenController {
     	if(chosenCell instanceof Eukaryotic) {
     		lblCellName.setText("Eukaryotic Cell");
     	}
+    	
         imgView.setImage(new Image(chosenCell.getImage()));
         
     	for(int i = 1; i <= chosenCell.getComponents().size(); i++) {
